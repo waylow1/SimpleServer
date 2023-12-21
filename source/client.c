@@ -9,7 +9,7 @@
 
 #define port 50000
 
-void main(int argc,char ** argv){
+int main(int argc,char ** argv){
 
     char * ip_serveur = argv[1];
     struct sockaddr_in adresse_serveur;
@@ -50,5 +50,5 @@ void main(int argc,char ** argv){
 
     close(socketPourClient);
 
-    return ;
+    return 0;
 }
