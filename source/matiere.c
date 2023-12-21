@@ -2,6 +2,6 @@
 
 typedef struct Matiere {
     int id; 
-    char * nom;
+    char nom[24];
     float moyenne;
 } Matiere;
