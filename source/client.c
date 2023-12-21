@@ -5,6 +5,7 @@
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
+#include <arpa/inet.h>
 
 #define port 50000
 
@@ -14,7 +15,7 @@ void main(int argc,char ** argv){
     struct sockaddr_in adresse_serveur;
     
     if (argc != 2) {
-        prtintf("Nombre de paramètres eronné\n");
+        printf("Nombre de paramètres eronné\n");
         exit(EXIT_FAILURE);
     }
 
@@ -49,5 +50,5 @@ void main(int argc,char ** argv){
 
     close(socketPourClient);
 
-    return 0;
+    return ;
 }
