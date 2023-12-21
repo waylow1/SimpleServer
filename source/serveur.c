@@ -8,6 +8,9 @@
 #include <arpa/inet.h>
 #include <sys/ioctl.h>
 #include <string.h>
+#include <fcntl.h> 
+#include <unistd.h> 
+
 
 #include "matiere.c"
 
@@ -150,8 +153,9 @@ int run()
     len = sizeof(client);
     getCurrentIp(ip);
 
+    printf("------------------------------------\n");
     printf("[LOG] - Server configuration : \n \t IP : %s \n",ip);
-
+    printf("------------------------------------\n");
 
     //Create connection for accept datas /!\ Log only when client trying to connect
     connection = accept(sockfd, (struct sockaddr*)&client, &len);
