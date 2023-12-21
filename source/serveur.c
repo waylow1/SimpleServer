@@ -11,6 +11,9 @@
 
 #include "matiere.c"
 
+#define MAX 256
+#define IPSIZE 16
+
 Matiere listeMatieres[] =
 {
     { 1,"Anglais", 12.5},
@@ -23,7 +26,6 @@ Matiere listeMatieres[] =
 
 /**
  * @brief fetch the current device Ip into a string
- * 
  * @param str the char[] to fill
  */
 void getCurrentIp(char str[])
@@ -45,6 +47,19 @@ void getCurrentIp(char str[])
 }
 
 /**
+ * @brief Read and display message from a client socket
+ * @param sockfd the socket to read
+ */
+void readContent(int sockfd)
+{
+    char buff[MAX]; 
+    bzero(buff, MAX); 
+    read(sockfd, buff, sizeof(buff)); 
+    printf("[LOG] - Client Message: \n \t%s\n", buff); 
+    bzero(buff, MAX); 
+}
+
+/**
  * @brief Create a server and run it
  * @return the sockfd value
  */
@@ -55,7 +70,7 @@ int run()
     int sockfd;   
     int connection;
 
-    char ip[] = "";
+    char ip[IPSIZE];
 
     socklen_t len;
 
@@ -105,8 +120,8 @@ int run()
         printf("[ERROR] - Server Acceptation Failed \n");
     }else{
         printf("[LOG] - Server Ready To Accept Connection \n");
+        readContent(connection);
     }
     
-
     return sockfd;
 }
