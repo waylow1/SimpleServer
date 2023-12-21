@@ -10,3 +10,8 @@ Matiere listeMatieres[] =
     { 5,"Physiques", 11.8},
     { 6,"Programmation systeme", 12.3}
 };
+
+void run()
+{
+
+}
