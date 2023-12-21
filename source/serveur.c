@@ -13,6 +13,8 @@
 
 #define MAX 256
 #define IPSIZE 16
+#define MAX_RESPONSE 1024
+#define LIST_MATIERE_SIZE 6
 
 Matiere listeMatieres[] =
 {
@@ -47,15 +49,52 @@ void getCurrentIp(char str[])
 }
 
 /**
- * @brief Read and display message from a client socket
+ * @brief Generate the response to send to the client
+ * @param matiere the matiere to send  
+ * @param response the response to fill
+ */
+void generateResponse(Matiere matiere, char response[])
+{
+    snprintf(response, MAX_RESPONSE, "Subject: %s, Moyenne: %f", matiere.nom, matiere.moyenne);
+}
+
+
+/**
+ * @brief Read and display message from a client socket. After : reply to the client
  * @param sockfd the socket to read
  */
 void readContent(int sockfd)
 {
     char buff[MAX]; 
+    
     bzero(buff, MAX); 
+    
     read(sockfd, buff, sizeof(buff)); 
-    printf("[LOG] - Client Message: \n \t%s\n", buff); 
+    
+    printf("[LOG] - Client Message: \t%s\n", buff); 
+    
+    int subjectId = atoi(buff);
+    
+    printf("[LOG] - Subject ID : %d \n", subjectId);
+    
+    Matiere selected;
+    
+    for(int i = 0; i<LIST_MATIERE_SIZE-1; i++)
+    {
+        if(listeMatieres[i].type == subjectId)
+        {
+            selected = listeMatieres[i];
+            break;
+        }
+    }
+
+
+    char response[MAX_RESPONSE];
+
+    generateResponse(selected, response);
+
+    write(sockfd, response, sizeof(response));
+
     bzero(buff, MAX); 
 }
 
@@ -111,7 +150,7 @@ int run()
     len = sizeof(client);
     getCurrentIp(ip);
 
-    printf("Server configuration : \n \t IP : %s \n",ip);
+    printf("[LOG] - Server configuration : \n \t IP : %s \n",ip);
 
 
     //Create connection for accept datas /!\ Log only when client trying to connect

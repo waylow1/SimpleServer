@@ -8,6 +8,7 @@
 #include <arpa/inet.h>
 
 #define port 50000
+#define MAX_BUFFER_SIZE 1024
 
 int main(int argc,char ** argv){
 
@@ -41,11 +42,20 @@ int main(int argc,char ** argv){
         exit(EXIT_FAILURE);
     }
 
-    const char * message = "Hello, World!";
+    const char * message = "1";
     if (send(socketPourClient, message, strlen(message), 0) == -1) {
         perror("Erreur lors de l'envoi du message");
     } else {
         printf("Message envoyé avec succès : %s\n", message);
+    }
+
+    char buffer[MAX_BUFFER_SIZE];
+    ssize_t received_bytes = recv(socketPourClient, buffer, sizeof(buffer), 0);
+
+    if (received_bytes == -1) {
+        perror("Error receiving response");
+    } else {
+        printf("%s\n", buffer);
     }
 
     close(socketPourClient);
