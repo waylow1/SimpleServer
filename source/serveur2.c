@@ -83,7 +83,7 @@ void readContent(int sockfd)
     
     Matiere selected;
     
-    for(int i = 0; i<LIST_MATIERE_SIZE-1; i++)
+    for(int i = 0; i<LIST_MATIERE_SIZE; i++)
     {
         if(listeMatieres[i].type == subjectId)
         {
