@@ -42,14 +42,15 @@ int main(int argc,char ** argv){
         exit(EXIT_FAILURE);
     }
     int choix;
-    do {
+    while (1) {
         printf("Veuillez saisir un nombre entre 1 et 6 : ");
-        scanf("%d", &choix);
-
-        if (choix < 1 || choix > 6) {
+        if (scanf("%d", &choix) != 1 || choix < 1 || choix > 6) {
             printf("La saisie n'est pas valide. Veuillez réessayer.\n");
+            while (getchar() != '\n');
+        } else {
+            break; 
         }
-    }while (choix < 1 || choix > 6); 
+    }
 
     char message[2];  
     snprintf(message, sizeof(message), "%d", choix);
