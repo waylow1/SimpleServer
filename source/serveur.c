@@ -158,13 +158,21 @@ int run()
     printf("------------------------------------\n");
 
     //Create connection for accept datas /!\ Log only when client trying to connect
-    connection = accept(sockfd, (struct sockaddr*)&client, &len);
-    if(connection < 0){
-        printf("[ERROR] - Server Acceptation Failed \n");
-    }else{
-        printf("[LOG] - Server Ready To Accept Connection \n");
-        readContent(connection);
+    while(1)
+    {
+        connection = accept(sockfd, (struct sockaddr*)&client, &len);
+
+        if(connection < 0)
+        {
+            printf("[ERROR] - Server Acceptation Failed \n");
+        }
+        else
+        {
+            printf("[LOG] - Server Ready To Accept Connection \n");
+            readContent(connection);
+            close(connection);
+        }
     }
-    
+
     return sockfd;
 }
