@@ -41,8 +41,22 @@ int main(int argc,char ** argv){
         close(socketPourClient);
         exit(EXIT_FAILURE);
     }
+    int choix;
+    while (1) {
+        printf("Veuillez saisir un nombre entre 1 et 6 : ");
+        if (scanf("%d", &choix) != 1) {
+            printf("La saisie n'est pas valide. Veuillez réessayer.\n");
+            while (getchar() != '\n');
+        } else if (choix < 1 || choix > 6) {
+            printf("La saisie n'est pas dans la plage valide. Veuillez réessayer.\n");
+        } else {
+            break;
+        }
+    }
 
-    const char * message = "1";
+    char message[2];  
+    snprintf(message, sizeof(message), "%d", choix);
+
     if (send(socketPourClient, message, strlen(message), 0) == -1) {
         perror("Erreur lors de l'envoi du message");
     } else {
